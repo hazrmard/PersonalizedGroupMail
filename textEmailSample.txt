@@ -1,0 +1,9 @@
+This is a test email body for sending out personalized email messages.
+
+This application uses python.
+
+Blah de blah and hakuna matata.
+
+
+____________________
+Author

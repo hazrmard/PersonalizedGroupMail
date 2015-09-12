@@ -7,5 +7,6 @@ setup(
     version = "0.0",
     author = "Ibrahim Ahmed",
     description = "Send batch emails with personalized greetings.",
-    packages = ['PersonalizedGroupMail']
+    packages = ['PersonalizedGroupMail'],
+    install_requires = ['html2text']
 )
