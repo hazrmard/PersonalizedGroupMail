@@ -63,6 +63,16 @@ class PersonalizedGroupMail:
             self.personalmsgs = self.personalmsgs[:len(self.recipients)]  # truncating after last iteration
         random.shuffle(self.personalmsgs)
 
+    def set_default_salutation(self, s):
+        self.salutations = [s for x in self.salutations if x == '']
+        for i in range(len(self.recipients) - len(self.salutations)):
+            self.salutations.append(s)
+
+    def set_default_personalized_message(self, m):
+        self.salutations = [m for x in self.personalmsgs if x == '']
+        for i in range(len(self.recipients) - len(self.personalmsgs)):
+            self.personalmsgs.append(m)
+
     def set_connection(self, host, port):
         if host is not None and port is not None:
             self.host = host
@@ -100,7 +110,7 @@ class PersonalizedGroupMail:
         return l
 
     def _compose_html(self, index, begin):
-        msghtml = self.htmlmsg[:begin] + '<p>' + self.salutations[index] + ' ' + self.names[index] + ',' + '</p><p>' + self.common_pm + self.personalmsgs[index] + '</p>' + self.htmlmsg[begin:]
+        msghtml = self.htmlmsg[:begin] + '<p>' + self.salutations[index] + ' ' + self.names[index] + ',' + '</p><p>' + self.common_pm + ' ' + self.personalmsgs[index] + '</p>' + self.htmlmsg[begin:]
         msgplain = self.html2text.handle(msghtml)
         msg = MIMEMultipart('alternative')
         textMIME = MIMEText(msgplain, 'plain')
@@ -114,7 +124,7 @@ class PersonalizedGroupMail:
         return msg.as_string()
 
     def _compose_text(self, index):
-        msg = MIMEText(self.salutations[index] + ' ' + self.names[index] + ',\n\n' + self.common_pm + self.personalmsgs[index] + '\n\n' + self.msg)
+        msg = MIMEText(self.salutations[index] + ' ' + self.names[index] + ',\n\n' + self.common_pm + ' ' + self.personalmsgs[index] + '\n\n' + self.msg)
         msg['Subject'] = self.subject
         msg['From'] = self.my_email_address
         msg['To'] = self.recipients[index]
