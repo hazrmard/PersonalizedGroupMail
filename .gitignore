@@ -100,3 +100,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# real email testing
+realTesting.py
+realTestData.py
