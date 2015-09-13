@@ -59,3 +59,5 @@ Finally, enter the magic command and the messages will be on their way:
 ```python
 batchEmail.send()
 ```
+##HTML Support
+This package can send HTML files (and their plaintext alternatives). Currently there is no support for HTML attachments (like images etc.). Gmail does not have support for `<style></style>` tags in the email. So you can use [premailer](https://pypi.python.org/pypi/premailer) to convert `<style>` tags into inline style attributes.
