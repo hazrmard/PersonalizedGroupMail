@@ -44,10 +44,10 @@ In case there are fewer salutations or PMs than there are recipients, they can b
 batchEmail.randomize_salutations()
 batchEmail.randomize_personalized_messages()
 ```
-Or if you need a default salutation and personal message for recipients that do noy have any, you can use:
+Or if you need a default salutation and personal message for recipients that do not have any, you can use:
 ```python
 batchEmail.set_default_salutation('Howdy!')
-batchEmail.set_default_personalized_message('How've you been?')
+batchEmail.set_default_personalized_message("How've you been?")
 ```
 
 All that is left is to connect to your email server and send the emails:  
