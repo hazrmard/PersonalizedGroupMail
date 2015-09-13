@@ -25,6 +25,7 @@ class PersonalizedGroupMail:
         self.my_email_address = sender
         self.subject = subject
         self.html2text = HTML2Text()
+        self._tempmsg = None
 
     def get_message_from_text(self, filepath=None):
         f = open(filepath, 'rb')
@@ -74,29 +75,31 @@ class PersonalizedGroupMail:
             self.personalmsgs.append(m)
 
     def set_connection(self, host, port):
-        if host is not None and port is not None:
-            self.host = host
-            self.port = port
+        self.host = host
+        self.port = port
         self.smtp.connect(self.host, self.port)
         pass
 
     def authenticate(self, username, password, tls=True):
         if tls:
             self.smtp.starttls()
-        if username is not None and password is not None:
-            self.username = username
-            self.password = password
+        self.username = username
+        self.password = password
         self.smtp.login(self.username, self.password)
         pass
 
-    def send(self):
+    def send(self, sendmeacopy=False):
         if self.ishtml:
             firstpara = self.htmlmsg.find('<p')
             for i in range(len(self.recipients)):
                 self.smtp.sendmail(self.my_email_address, self.recipients[i], self._compose_html(i, firstpara))
+                if sendmeacopy:
+                    self.smtp.sendmail(self.my_email_address, self.my_email_address, self._tempmsg)
         else:
             for i in range(len(self.recipients)):
                 self.smtp.sendmail(self.my_email_address, self.recipients[i], self._compose_text(i))
+                if sendmeacopy:
+                    self.smtp.sendmail(self.my_email_address, self.my_email_address, self._tempmsg)
         self.smtp.quit()
 
     def _csv_reader(self, filepath, column):
@@ -121,7 +124,8 @@ class PersonalizedGroupMail:
         msg['From'] = self.my_email_address
         msg['To'] = self.recipients[index]
         msg['Date'] = strftime('%B %d, %Y %I:%M:%S %p')
-        return msg.as_string()
+        self._tempmsg = msg.as_string()
+        return self._tempmsg
 
     def _compose_text(self, index):
         msg = MIMEText(self.salutations[index] + ' ' + self.names[index] + ',\n\n' + self.common_pm + ' ' + self.personalmsgs[index] + '\n\n' + self.msg)
@@ -129,6 +133,7 @@ class PersonalizedGroupMail:
         msg['From'] = self.my_email_address
         msg['To'] = self.recipients[index]
         msg['Date'] = strftime('%B %d, %Y %I:%M:%S %p')
-        return msg.as_string()
+        self._tempmsg = msg.as_string()
+        return self._tempmsg
 
 
