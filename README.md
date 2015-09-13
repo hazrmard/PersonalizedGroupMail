@@ -26,7 +26,7 @@ batchEmail.msg = my_message                 # passing a string variable, or,
 batchEmail.get_message_from_text(filepath)  # passing a text file path, or,
 batchEmail.get_message_from_html(filepath)  # passing a html file path
 ```
-The next stap is to get the recipients' names, email addresses, personal messages, and salutations (Hi, hey etc). There are two ways of doing this (using the example of salutations):
+The next step is to get the recipients' names, email addresses, personal messages, and salutations (Hi, hey etc). There are two ways of doing this (using the example of salutations):
 ```
 batchEmail.salutations = list_of_salutations            # passing a list variable, or,
 batchEmail.get_salutations_from_csv(filepath, column)   # loading them from a csv file with column specified
