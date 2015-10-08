@@ -70,7 +70,7 @@ class PersonalizedGroupMail:
             self.salutations.append(s)
 
     def set_default_personalized_message(self, m):
-        self.salutations = [m for x in self.personalmsgs if x == '']
+        self.personalmsgs = [m for x in self.personalmsgs if x == '']
         for i in range(len(self.recipients) - len(self.personalmsgs)):
             self.personalmsgs.append(m)
 
